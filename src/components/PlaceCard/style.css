@@ -1,0 +1,98 @@
+.container__card {
+    border-radius: 16px;
+    height: 230px;
+    width: 500px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.178);
+    transition: 0.2s;
+    margin: 0 30px;
+}
+
+.container__card:hover {
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.1);
+}
+
+.btn__card {
+    position: fixed;
+    width: 110px;
+    height: 30px;
+    border-radius: 8px;
+    margin: 180px 0 0 40px;
+    cursor: pointer;
+    border: none;
+    background-color: #23464d;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.btn__card:hover {
+    background-color: #689299;
+}
+
+.card__img {
+    position: fixed;
+    width: 200px;
+    height: 150px;
+    border-radius: 16px 0;
+}
+
+.card__title {
+    background-color: #23464d;
+    border-radius: 16px 16px 0 0;
+    height: 30px;
+    padding: 10px 0 0 210px;
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.card__category {
+    font-size: 12px;
+    margin-left: 210px;
+    width: 160px;
+    height: 25px;
+    text-align: center;
+    border-radius: 0 0 6px 6px;
+    background: #001a1a;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.card__avaliation {
+    display: flex;
+    font-size: 14px;
+
+    font-weight: 700;
+    margin: 10px 0 0 210px;
+}
+
+.card__img__star {
+    margin-right: 10px;
+    width: 20px;
+}
+
+.card__contato {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    margin: 0 0 0 210px;
+}
+
+.card__icons {
+    width: 12px;
+    height: 12px;
+}
+
+.card__telefone,
+.card__email {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.card__location {
+    display: flex;
+    font-size: 14px;
+    margin: 0 0 0 210px;
+    gap: 10px;
+    align-items: center;
+}
