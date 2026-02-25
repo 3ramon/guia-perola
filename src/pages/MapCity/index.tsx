@@ -1,12 +1,12 @@
 import NavBar from "../../components/Navbar";
 
-export default function Home() {
+export default function MapCity() {
    
 
     return (
         <>
             <NavBar />
-            <h1>Estamos na Home</h1>
+            <h1>Estamos no mapa da cidade</h1>
         </>
     );
 }

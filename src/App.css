@@ -1,6 +1,26 @@
 .App {
   text-align: center;
+  background-color: var(--color-bg);
 }
+
+:root {
+  --color-primary: #1e4eb8;
+  --color-primary-hover: #1843b9;
+
+  --color-bg: #F1F5F9;
+  --color-card: #FFFFFF;
+
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #64748B;
+
+  --color-border: #E2E8F0;
+
+  --color-rating: #FBBF24;
+
+  --color-badge-bg: #E0F2FE;
+  --color-badge-text: #0369A1;
+}
+
 
 .App-logo {
   height: 40vmin;

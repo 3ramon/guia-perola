@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./style.css";
 import EstabelecimentoInterface from "../../EstabelecimentoInterface";
 
@@ -6,20 +6,34 @@ import locationIcon from "../../assets/location.png";
 import mailIcon from "../../assets/mail.png";
 import phoneIcon from "../../assets/phone.png";
 import starIcon from "../../assets/star.png";
+import { useNavigation } from "../../hooks/useNavigation";
+import { PlaceContext } from "../../context/placeContext";
 
 interface PlaceCardInterface {
     estabelecimento: EstabelecimentoInterface[];
 }
 
 export default function PlaceCard({ estabelecimento }: PlaceCardInterface) {
+    const { savePlace } = useContext(PlaceContext);
+   
+
+    const { handleNavigation } = useNavigation();
+
     return (
         <>
             {estabelecimento.map((lugar) => (
                 <div className="container__card">
                     <img src={lugar.imagem} alt="" className="card__img" />
 
-                    <button className="btn__card">Ver Detalhes</button>
-
+                    <button
+                        className="btn__card"
+                        onClick={() => {
+                            savePlace(lugar);
+                            handleNavigation("PlaceDetails");
+                        }}
+                    >
+                        Ver Detalhes
+                    </button>
 
                     <div className="card__title">{lugar.nome}</div>
 
@@ -55,14 +69,16 @@ export default function PlaceCard({ estabelecimento }: PlaceCardInterface) {
                             />
                             {lugar.contato.telefone}
                         </div>
-                        <div className="card__email">
-                            <img
-                                src={mailIcon}
-                                alt=""
-                                className="card__icons"
-                            />
-                            {lugar.contato.email}
-                        </div>
+                        {lugar.contato.email && (
+                            <div className="card__email">
+                                <img
+                                    src={mailIcon}
+                                    alt=""
+                                    className="card__icons"
+                                />
+                                {lugar.contato.email}
+                            </div>
+                        )}
                     </div>
                     <hr
                         style={{

@@ -2,30 +2,35 @@
     border-radius: 16px;
     height: 230px;
     width: 500px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.178);
-    transition: 0.2s;
-    margin: 0 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: 0.2s ease;
+    margin: 20px;
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
 }
 
 .container__card:hover {
-    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
 }
 
 .btn__card {
     position: fixed;
-    width: 110px;
-    height: 30px;
-    border-radius: 8px;
+    width: 120px;
+    height: 34px;
     margin: 180px 0 0 40px;
+    border-radius: 8px;
     cursor: pointer;
     border: none;
-    background-color: #23464d;
+    background-color: var(--color-primary);
     color: #ffffff;
     font-weight: 600;
+    transition: 0.2s ease;
 }
 
 .btn__card:hover {
-    background-color: #689299;
+    background-color: var(--color-primary-hover);
 }
 
 .card__img {
@@ -33,36 +38,39 @@
     width: 200px;
     height: 150px;
     border-radius: 16px 0;
+    object-fit: cover;
 }
 
 .card__title {
-    background-color: #23464d;
     border-radius: 16px 16px 0 0;
     height: 30px;
     padding: 10px 0 0 210px;
-    font-size: 16px;
-    color: #ffffff;
+    font-size: 18px;
+    color: var(--color-text-primary);
     font-weight: 700;
 }
 
 .card__category {
     font-size: 12px;
     margin-left: 210px;
-    width: 160px;
-    height: 25px;
+    padding: 4px 8px;
+    height: fit-content;
     text-align: center;
-    border-radius: 0 0 6px 6px;
-    background: #001a1a;
-    color: #ffffff;
-    font-weight: 700;
+    border-radius: 6px;
+    background-color: var(--color-badge-bg);
+    color: var(--color-badge-text);
+    font-weight: 600;
+    width: fit-content;
 }
 
 .card__avaliation {
     display: flex;
     font-size: 14px;
-
-    font-weight: 700;
+    align-items: center;
+    color: var(--color-accent);
+    font-weight: 600;
     margin: 10px 0 0 210px;
+    gap: 6px;
 }
 
 .card__img__star {
@@ -71,10 +79,12 @@
 }
 
 .card__contato {
+    font-size: 14px;
+    color: var(--color-text-secondary);
     display: flex;
     flex-direction: column;
-    font-size: 14px;
-    margin: 0 0 0 210px;
+    gap: 4px;
+    margin-left: 210px;
 }
 
 .card__icons {
@@ -92,7 +102,8 @@
 .card__location {
     display: flex;
     font-size: 14px;
-    margin: 0 0 0 210px;
-    gap: 10px;
+    margin-left: 210px;
+    color: var(--color-text-secondary);
     align-items: center;
+    gap: 6px;
 }
