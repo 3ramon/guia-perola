@@ -1,9 +1,8 @@
 import React, { createContext, useState, ReactNode, useEffect } from "react";
-import EstabelecimentoInterface from "../EstabelecimentoInterface";
-
+import { Estabelecimento } from "../types";
 interface PlaceContextType {
-    estabelecimento: EstabelecimentoInterface | null;
-    savePlace: (place: EstabelecimentoInterface) => void;
+    estabelecimento: Estabelecimento | null;
+    savePlace: (place: Estabelecimento) => void;
 }
 
 export const PlaceContext = createContext<PlaceContextType>(
@@ -12,11 +11,11 @@ export const PlaceContext = createContext<PlaceContextType>(
 
 export function PlaceProvider({ children }: { children: ReactNode }) {
     const [estabelecimento, setEstabelecimento] =
-        useState<EstabelecimentoInterface | null>(null);
+        useState<Estabelecimento | null>(null);
 
     useEffect(() => {}, []);
 
-    async function savePlace(place: EstabelecimentoInterface) {
+    async function savePlace(place: Estabelecimento) {
         await setEstabelecimento(place);
     }
 

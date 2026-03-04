@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import "./style.css";
-import EstabelecimentoInterface from "../../EstabelecimentoInterface";
 
 import locationIcon from "../../assets/location.png";
 import mailIcon from "../../assets/mail.png";
@@ -8,9 +7,10 @@ import phoneIcon from "../../assets/phone.png";
 import starIcon from "../../assets/star.png";
 import { useNavigation } from "../../hooks/useNavigation";
 import { PlaceContext } from "../../context/placeContext";
+import { Estabelecimento } from "../../types";
 
 interface PlaceCardInterface {
-    estabelecimento: EstabelecimentoInterface[];
+    estabelecimento: Estabelecimento[];
 }
 
 export default function PlaceCard({ estabelecimento }: PlaceCardInterface) {

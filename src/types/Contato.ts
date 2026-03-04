@@ -1,4 +1,4 @@
-export default interface ContatoInterface {
+export default interface Contato {
     telefone: string;
     email?: string;
     website?: string;
