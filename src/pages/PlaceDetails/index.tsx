@@ -3,19 +3,19 @@ import NavBar from "../../components/Navbar";
 import { PlaceContext } from "../../context/placeContext";
 
 export default function PlaceDetails() {
-    const { estabelecimento } = useContext(PlaceContext);
+    const { selectedEstabelecimento } = useContext(PlaceContext);
 
     return (
         <>
             <NavBar />
             <h1>Estamos nos detalhes dos estabelecimentos</h1>
             <ul>
-                {estabelecimento && (
+                {selectedEstabelecimento && (
                     <>
-                        <h1>{estabelecimento.nome}</h1>
-                        <p>{estabelecimento.categoria}</p>
-                        <p>{estabelecimento.endereco.rua}</p>
-                        <img src={estabelecimento.imagem} />
+                        <h1>{selectedEstabelecimento.nome}</h1>
+                        <p>{selectedEstabelecimento.categoria}</p>
+                        <p>{selectedEstabelecimento.endereco.rua}</p>
+                        <img src={selectedEstabelecimento.imagem} />
                     </>
                 )}
             </ul>

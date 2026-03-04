@@ -1,25 +1,28 @@
 import { useEffect, useState } from "react";
 import { Estabelecimento } from "../types";
-import { getEstabelecimentosByCategoria } from "../services/estabelecimentoService";
+import {
+    getEstabelecimentosByCategoria,
+    getEstabelecimentos,
+} from "../services/estabelecimentoService";
 
 export function useEstabelecimentos(categoria?: string) {
-  const [data, setData] = useState<Estabelecimento[]>([]);
-  const [loading, setLoading] = useState(false);
+    const [data, setData] = useState<Estabelecimento[]>([]);
+    const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
+    useEffect(() => {
+        async function fetchData() {
+            setLoading(true);
 
-      const result = categoria
-        ? await getEstabelecimentosByCategoria(categoria)
-        : [];
+            const result = categoria
+                ? await getEstabelecimentosByCategoria(categoria)
+                : await getEstabelecimentos();
 
-      setData(result);
-      setLoading(false);
-    }
+            setData(result);
+            setLoading(false);
+        }
 
-    fetchData();
-  }, [categoria]);
+        fetchData();
+    }, [categoria]);
 
-  return { data, loading };
+    return { data, loading };
 }
