@@ -5,7 +5,7 @@ import PlaceCard from "../../components/PlaceCard";
 import { PlaceContext } from "../../context/placeContext";
 
 export default function Places() {
-    const { estabelecimentosBanco, filterPlaces, isLoading } =
+    const { estabelecimentosBanco, filterPlaces, isLoading, categoriasBanco } =
         useContext(PlaceContext);
 
     const [categoriaAtiva, setCategoriaAtiva] = useState<string | null>(null);
@@ -22,33 +22,17 @@ export default function Places() {
                     <h1>Estabelecimentos de pérola</h1>
                 </header>
             </div>
-
             <div className="filtros">
-                <button
-                    className="chip active"
-                    onClick={() => {
-                        setCategoriaAtiva("Cultura");
-                    }}
-                >
-                    Cultura
-                </button>
-
-                <button
-                    className="chip"
-                    onClick={() => {
-                        setCategoriaAtiva("Saúde");
-                    }}
-                >
-                    Saúde
-                </button>
-                <button
-                    className="chip"
-                    onClick={() => {
-                        setCategoriaAtiva("Gastronomia");
-                    }}
-                >
-                    Gastronomia
-                </button>
+                {categoriasBanco.map((categoria) => (
+                    <button
+                        className="chip active"
+                        onClick={() => {
+                            setCategoriaAtiva(`${categoria}`);
+                        }}
+                    >
+                        {categoria}
+                    </button>
+                ))}
                 <button
                     className="btn__ghost"
                     onClick={() => {

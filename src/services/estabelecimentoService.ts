@@ -45,11 +45,16 @@ function mapEstabelecimentoToRow(
 }
 
 export async function getEstabelecimentos(): Promise<Estabelecimento[]> {
-    const { data, error } = await supabase.from("estabelecimentos").select("*");
+    const { data, error } = await supabase
+        .from("estabelecimentos")
+        .select("*")
+        .order("nome", { ascending: true });
 
-    if (error) throw error;
+    if (error) {
+        throw new Error(`Erro ao buscar estabelecimentos: ${error.message}`);
+    }
 
-    return data.map(mapRowToEstabelecimento);
+    return (data as EstabelecimentoRow[]).map(mapRowToEstabelecimento);
 }
 
 export async function getEstabelecimentosByCategoria(
@@ -58,11 +63,16 @@ export async function getEstabelecimentosByCategoria(
     const { data, error } = await supabase
         .from("estabelecimentos")
         .select("*")
-        .eq("categoria", categoria);
+        .eq("categoria", categoria)
+        .order("nome", { ascending: true });
 
-    if (error) throw error;
+    if (error) {
+        throw new Error(
+            `Erro ao buscar estabelecimentos filtrados pro categoria: ${error.message}`,
+        );
+    }
 
-    return data.map(mapRowToEstabelecimento);
+    return (data as EstabelecimentoRow[]).map(mapRowToEstabelecimento);
 }
 
 export async function getEstabelecimentoById(
@@ -74,9 +84,13 @@ export async function getEstabelecimentoById(
         .eq("id", id)
         .single();
 
-    if (error) return null;
+    if (error) {
+        throw new Error(
+            `Erro ao buscar estabelecimento por Id: ${error.message}`,
+        );
+    }
 
-    return mapRowToEstabelecimento(data);
+    return mapRowToEstabelecimento(data as EstabelecimentoRow);
 }
 
 export async function createEstabelecimento(
@@ -90,8 +104,12 @@ export async function createEstabelecimento(
         .select()
         .single();
 
-    if (error) throw error;
+    if (error) {
+        throw new Error(
+            `Erro ao criar estabelecimento: ${error.message}`,
+        );
+    }
 
-    return mapRowToEstabelecimento(data);
+    return mapRowToEstabelecimento(data as EstabelecimentoRow);
 }
-export {}
+

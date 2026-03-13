@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../config/supabase";
+import { getCategorias } from "../services";
 
 export function useCategorias() {
-  const [categorias, setCategorias] = useState<string[]>([]);
+    const [categorias, setCategorias] = useState<string[]>([]);
 
-  useEffect(() => {
-    async function fetchCategorias() {
-      const { data } = await supabase
-        .from("categorias")
-        .select("nome");
+    useEffect(() => {
+        async function fetchCategorias() {
+            const result = await getCategorias();
 
-      setCategorias(data?.map(c => c.nome) ?? []);
-    }
+            setCategorias(result?.map((c) => c) ?? []);
+        }
 
-    fetchCategorias();
-  }, []);
+        fetchCategorias();
+    }, []);
 
-  return { categorias };
+    return { categorias };
 }

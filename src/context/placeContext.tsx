@@ -1,11 +1,13 @@
 import React, { createContext, useState, ReactNode, useEffect } from "react";
 import { Estabelecimento } from "../types";
 import { useEstabelecimentos } from "../hooks/useEstabelecimentos";
+import { useCategorias } from "../hooks/useCategorias";
 
 interface PlaceContextType {
     selectedEstabelecimento: Estabelecimento | null;
     savePlace: (place: Estabelecimento) => void;
     estabelecimentosBanco: Estabelecimento[];
+    categoriasBanco: string[];
     isLoading: boolean;
     filterPlaces: (categoria: string | null) => void;
     selectedCategoria: string | null;
@@ -19,9 +21,13 @@ export function PlaceProvider({ children }: { children: ReactNode }) {
     const [selectedCategoria, setSelectedCategoria] = useState<string | null>(
         null,
     );
+    const [categoriasBanco, setCategoriasBanco] = useState<string[] | null>(
+        null,
+    );
     const { data, loading } = useEstabelecimentos(
         selectedCategoria ?? undefined,
     );
+    const { categorias } = useCategorias();
     const [selectedEstabelecimento, setSelectedEstabelecimento] =
         useState<Estabelecimento | null>(null);
     const [estabelecimentosBanco, setEstabelecimentosBanco] = useState<
@@ -31,6 +37,12 @@ export function PlaceProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         if (data) {
             setEstabelecimentosBanco(data);
+        }
+    }, [data]);
+
+    useEffect(() => {
+        if (categorias) {
+            setCategoriasBanco(categorias);
         }
     }, [data]);
 
@@ -47,6 +59,7 @@ export function PlaceProvider({ children }: { children: ReactNode }) {
             value={{
                 isLoading: loading,
                 estabelecimentosBanco: data,
+                categoriasBanco: categorias,
                 selectedEstabelecimento,
                 selectedCategoria,
                 filterPlaces,

@@ -5,9 +5,9 @@ import { Estabelecimento } from "../types";
 export function useCreateEstabelecimento() {
     const [loading, setLoading] = useState(false);
 
-    async function create(est: Omit<Estabelecimento, "id">) {
+    async function create(estabelecimento: Omit<Estabelecimento, "id">) {
         setLoading(true);
-        const result = await createEstabelecimento(est);
+        const result = await createEstabelecimento(estabelecimento);
         setLoading(false);
         return result;
     }

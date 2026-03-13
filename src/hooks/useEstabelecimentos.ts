@@ -3,7 +3,7 @@ import { Estabelecimento } from "../types";
 import {
     getEstabelecimentosByCategoria,
     getEstabelecimentos,
-} from "../services/estabelecimentoService";
+} from "../services";
 
 export function useEstabelecimentos(categoria?: string) {
     const [data, setData] = useState<Estabelecimento[]>([]);
