@@ -6,11 +6,14 @@ export function useCreateEstabelecimento() {
     const [loading, setLoading] = useState(false);
 
     async function create(estabelecimento: Omit<Estabelecimento, "id">) {
-        setLoading(true);
-        const result = await createEstabelecimento(estabelecimento);
-        setLoading(false);
-        return result;
+        try {
+            setLoading(true);
+            const result = await createEstabelecimento(estabelecimento);
+            return result;
+        } finally {
+            setLoading(false);
+        }
     }
 
-    return { create, loading };
+    return { create, loading};
 }

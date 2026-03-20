@@ -57,7 +57,7 @@ Ramon, segue a avaliacao do seu commit de criacao dos hooks e do formulario de c
 
 **B3 — Mensagem de sucesso aparece antes de submeter (`Register/index.tsx`, linhas 132-140)**
 <!-- Voce condiciona a mensagem "Cadastro concluido" a `loading === false`. Mas `loading` comeca como `false`. Resultado: a mensagem de sucesso ja aparece quando o usuario abre a tela, antes de preencher qualquer coisa. Voce precisa criar um state `submitted` pra controlar isso. -->
-
+RESOLVER LOGICA POIS DO LOADING (NAO APARECE CARREGANDO)
 
 ### Problemas moderados
 
