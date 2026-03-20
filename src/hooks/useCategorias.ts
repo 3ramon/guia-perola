@@ -9,7 +9,7 @@ export function useCategorias() {
         async function fetchCategorias() {
             const result = await getCategorias();
 
-            setCategorias(result?.map((c) => c) ?? []);
+            setCategorias(result);
         }
 
         fetchCategorias();

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Estabelecimento } from "../../types";
 import { useCreateEstabelecimento } from "../../hooks/useCreateEstabelecimento";
 import { useNavigation } from "../../hooks/useNavigation";
+import { uploadImagem } from "../../services/storageService";
 
 export default function Register() {
     //configurar o state de as funcoes handle, peguei um exemplo basico de formulario para preencher
@@ -16,7 +17,8 @@ export default function Register() {
         endereco: { rua: "", bairro: "", referencia: "" },
         imagem: "",
     });
-
+    const [file, setFile] = useState<File | null>(null);
+    const [submitedd, setSubmitedd] = useState<boolean>(false);
     const { handleNavigation } = useNavigation();
 
     const { create, loading } = useCreateEstabelecimento();
@@ -43,96 +45,112 @@ export default function Register() {
             setFormData({ ...formData, [name]: value });
         }
     };
-    const handleSubmit = (e: React.FormEvent) => {
+
+    async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        console.log("Estabelecimento cadastrado:", formData);
-        alert("Estabelecimento cadastrado com sucesso!");
-        create(formData);
-    };
+
+        let imagemUrl = formData.imagem;
+        if (file) {
+            imagemUrl = await uploadImagem(file);
+        }
+        const payload = {
+            ...formData,
+            imagem: imagemUrl,
+        };
+
+        try {
+            await create(payload);
+            setSubmitedd(true);
+        } catch (error) {
+            alert("Erro ao cadastrar");
+        }
+    }
 
     return (
         <>
             <NavBar />
-            <form onSubmit={handleSubmit}>
-                <h4>Estabelecimento</h4>
-                <input
-                    name="nome"
-                    placeholder="Nome"
-                    value={formData.nome}
-                    onChange={handleChange}
-                />
-                <input
-                    name="categoria"
-                    placeholder="Categoria"
-                    value={formData.categoria}
-                    onChange={handleChange}
-                />
-                <input
-                    name="subcategoria"
-                    placeholder="Subcategoria"
-                    value={formData.subcategoria}
-                    onChange={handleChange}
-                />
-                <input
-                    name="avaliacao"
-                    type="number"
-                    placeholder="Avaliação"
-                    value={formData.avaliacao}
-                    onChange={handleChange}
-                />
-                <input
-                    name="qtdAvaliacao"
-                    type="number"
-                    placeholder="Qtd Avaliações"
-                    value={formData.qtdAvaliacao || ""}
-                    onChange={handleChange}
-                />
+            {!submitedd ? (
+                <form onSubmit={handleSubmit}>
+                    <h4>Estabelecimento</h4>
+                    <input
+                        name="nome"
+                        placeholder="Nome"
+                        value={formData.nome}
+                        onChange={handleChange}
+                    />
+                    <input
+                        name="categoria"
+                        placeholder="Categoria"
+                        value={formData.categoria}
+                        onChange={handleChange}
+                    />
+                    <input
+                        name="subcategoria"
+                        placeholder="Subcategoria"
+                        value={formData.subcategoria}
+                        onChange={handleChange}
+                    />
+                    <input
+                        name="avaliacao"
+                        type="number"
+                        placeholder="Avaliação"
+                        value={formData.avaliacao}
+                        onChange={handleChange}
+                    />
+                    <input
+                        name="qtdAvaliacao"
+                        type="number"
+                        placeholder="Qtd Avaliações"
+                        value={formData.qtdAvaliacao || ""}
+                        onChange={handleChange}
+                    />
 
-                <h4>Contato</h4>
-                <input
-                    name="contato.telefone"
-                    placeholder="Telefone"
-                    value={formData.contato.telefone}
-                    onChange={handleChange}
-                />
-                <input
-                    name="contato.email"
-                    placeholder="Email"
-                    value={formData.contato.email}
-                    onChange={handleChange}
-                />
+                    <h4>Contato</h4>
+                    <input
+                        name="contato.telefone"
+                        placeholder="Telefone"
+                        value={formData.contato.telefone}
+                        onChange={handleChange}
+                    />
+                    <input
+                        name="contato.email"
+                        placeholder="Email"
+                        value={formData.contato.email}
+                        onChange={handleChange}
+                    />
 
-                <h4>Endereço</h4>
-                <input
-                    name="endereco.rua"
-                    placeholder="Rua"
-                    value={formData.endereco.rua}
-                    onChange={handleChange}
-                />
-                <input
-                    name="endereco.bairro"
-                    placeholder="Bairro"
-                    value={formData.endereco.bairro}
-                    onChange={handleChange}
-                />
-                <input
-                    name="endereco.referencia"
-                    placeholder="Referencia"
-                    value={formData.endereco.referencia}
-                    onChange={handleChange}
-                />
+                    <h4>Endereço</h4>
+                    <input
+                        name="endereco.rua"
+                        placeholder="Rua"
+                        value={formData.endereco.rua}
+                        onChange={handleChange}
+                    />
+                    <input
+                        name="endereco.bairro"
+                        placeholder="Bairro"
+                        value={formData.endereco.bairro}
+                        onChange={handleChange}
+                    />
+                    <input
+                        name="endereco.referencia"
+                        placeholder="Referencia"
+                        value={formData.endereco.referencia}
+                        onChange={handleChange}
+                    />
+                    <h4>Imagem</h4>
+                    <input
+                        name="imagem"
+                        type="file"
+                        placeholder="URL da Imagem"
+                        value={formData.imagem}
+                        onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+                    />
 
-                <input
-                    name="imagem"
-                    placeholder="URL da Imagem"
-                    value={formData.imagem}
-                    onChange={handleChange}
-                />
-
-                <button type="submit">Cadastrar</button>
-            </form>
-            {loading ? (
-                <div>Caregando</div>
+                    <button type="submit">Cadastrar</button>
+                </form>
+            ) : loading ? (
+                <div>Carregando</div>
             ) : (
                 <p>
                     Cadastro concluido, vá para a tela de Estabelecimentos!

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./style.css";
 
 import locationIcon from "../../assets/location.png";
@@ -8,6 +8,7 @@ import starIcon from "../../assets/star.png";
 import { useNavigation } from "../../hooks/useNavigation";
 import { PlaceContext } from "../../context/placeContext";
 import { Estabelecimento } from "../../types";
+import { uploadImagem } from "../../services/storageService";
 
 interface PlaceCardInterface {
     estabelecimento: Estabelecimento[];
@@ -15,10 +16,9 @@ interface PlaceCardInterface {
 
 export default function PlaceCard({ estabelecimento }: PlaceCardInterface) {
     const { savePlace } = useContext(PlaceContext);
-   
+
 
     const { handleNavigation } = useNavigation();
-
     return (
         <>
             {estabelecimento.map((lugar) => (

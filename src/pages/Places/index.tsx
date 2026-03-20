@@ -3,11 +3,12 @@ import "./style.css";
 import NavBar from "../../components/Navbar";
 import PlaceCard from "../../components/PlaceCard";
 import { PlaceContext } from "../../context/placeContext";
+import { useCategorias } from "../../hooks/useCategorias";
 
 export default function Places() {
-    const { estabelecimentosBanco, filterPlaces, isLoading, categoriasBanco } =
+    const { estabelecimentosBanco, filterPlaces, isLoading } =
         useContext(PlaceContext);
-
+    const { categorias } = useCategorias();
     const [categoriaAtiva, setCategoriaAtiva] = useState<string | null>(null);
 
     useEffect(() => {
@@ -23,9 +24,10 @@ export default function Places() {
                 </header>
             </div>
             <div className="filtros">
-                {categoriasBanco.map((categoria) => (
+                {categorias.map((categoria) => (
                     <button
-                        className="chip active"
+                        key={categoria}
+                        className={`chip ${categoriaAtiva === categoria ? "active" : ""}`}
                         onClick={() => {
                             setCategoriaAtiva(`${categoria}`);
                         }}

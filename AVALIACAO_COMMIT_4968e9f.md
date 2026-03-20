@@ -49,47 +49,49 @@ Ramon, segue a avaliacao do seu commit de criacao dos hooks e do formulario de c
 ### Problemas criticos — corrige antes de qualquer coisa
 
 **B1 — Erro no SQL (`supabaseSetup.sql`, linha 13)**
-Voce escreveu `default "{}"` mas aspas duplas em SQL referenciam nomes de coluna, nao strings. O correto e `default '{}'::jsonb`. Do jeito que esta, a tabela nao cria.
+<!-- Voce escreveu `default "{}"` mas aspas duplas em SQL referenciam nomes de coluna, nao strings. O correto e `default '{}'::jsonb`. Do jeito que esta, a tabela nao cria. -->
+
 
 **B2 — Alert antes do create (`Register/index.tsx`, linha 44)**
-Seu `handleSubmit` faz `alert("Cadastrado!")` e **depois** chama `create()`. Se o create falhar, o usuario ja recebeu mensagem de sucesso. Voce precisa inverter: primeiro espera o `create()` terminar, depois mostra o feedback.
+<!-- Seu `handleSubmit` faz `alert("Cadastrado!")` e **depois** chama `create()`. Se o create falhar, o usuario ja recebeu mensagem de sucesso. Voce precisa inverter: primeiro espera o `create()` terminar, depois mostra o feedback. -->
 
 **B3 — Mensagem de sucesso aparece antes de submeter (`Register/index.tsx`, linhas 132-140)**
-Voce condiciona a mensagem "Cadastro concluido" a `loading === false`. Mas `loading` comeca como `false`. Resultado: a mensagem de sucesso ja aparece quando o usuario abre a tela, antes de preencher qualquer coisa. Voce precisa criar um state `submitted` pra controlar isso.
+<!-- Voce condiciona a mensagem "Cadastro concluido" a `loading === false`. Mas `loading` comeca como `false`. Resultado: a mensagem de sucesso ja aparece quando o usuario abre a tela, antes de preencher qualquer coisa. Voce precisa criar um state `submitted` pra controlar isso. -->
+
 
 ### Problemas moderados
 
 **B4 — Dependency array errado (`placeContext.tsx`, linha 45)**
-Seu `useEffect` que atualiza `categoriasBanco` depende de `[data]`, mas deveria depender de `[categorias]`. Esta atualizando no momento errado.
+<!-- Seu `useEffect` que atualiza `categoriasBanco` depende de `[data]`, mas deveria depender de `[categorias]`. Esta atualizando no momento errado. -->
 
 **B5 — Falta `key` no map (`Places/index.tsx`, linha 25)**
-Quando voce faz `.map()` no React, cada elemento precisa de uma `key`. Sem isso o React emite warning e pode ter problemas de performance. Adicione `key={categoria}`.
+<!-- Quando voce faz `.map()` no React, cada elemento precisa de uma `key`. Sem isso o React emite warning e pode ter problemas de performance. Adicione `key={categoria}`. -->
 
 **B6 — Chip ativo nao funciona (`Places/index.tsx`, linha 25)**
-Todos os botoes de categoria recebem `className="chip active"`. Ou seja, todos ficam "ativos" ao mesmo tempo. Voce precisa comparar com `categoriaAtiva`:
+<!-- Todos os botoes de categoria recebem `className="chip active"`. Ou seja, todos ficam "ativos" ao mesmo tempo. Voce precisa comparar com `categoriaAtiva`:
 ```tsx
 className={`chip ${categoriaAtiva === categoria ? "active" : ""}`}
-```
+``` -->
 
 ### Problemas menores
 
 **B7 — State que nao serve pra nada (`placeContext.tsx`, linhas 24-26)**
-Voce criou o state `categoriasBanco` com `useState`, mas no value do Provider voce passa `categorias` direto do hook. Esse state nunca e usado. Pode remover ele e o `useEffect` associado.
+<!-- Voce criou o state `categoriasBanco` com `useState`, mas no value do Provider voce passa `categorias` direto do hook. Esse state nunca e usado. Pode remover ele e o `useEffect` associado. -->
 
 **B8 — Map redundante (`useCategorias.ts`, linha 10)**
-Voce escreveu `result?.map((c) => c)` — isso mapeia cada item pra ele mesmo, nao faz nada. Simplifica pra `result ?? []`.
+<!-- Voce escreveu `result?.map((c) => c)` — isso mapeia cada item pra ele mesmo, nao faz nada. Simplifica pra `result ?? []`. -->
 
 **B9 — Typo**
-`"Caregando"` esta escrito errado em `Register/index.tsx`, linha 133. O correto e `"Carregando"`.
+<!-- `"Caregando"` esta escrito errado em `Register/index.tsx`, linha 133. O correto e `"Carregando"`. -->
 
 **B10 — Comentarios excessivos (`storageService.ts`, linhas 23-47)**
-Metade do arquivo sao comentarios explicando o que `Date.now()` e `Math.random()` fazem. Eu entendo que voce esta estudando, mas no codigo do projeto mantenha no maximo 1-2 linhas. Comentarios devem explicar o **porque** de algo, nao o **como** — o como ja esta no codigo.
+<!-- Metade do arquivo sao comentarios explicando o que `Date.now()` e `Math.random()` fazem. Eu entendo que voce esta estudando, mas no codigo do projeto mantenha no maximo 1-2 linhas. Comentarios devem explicar o **porque** de algo, nao o **como** — o como ja esta no codigo. -->
 
 ---
 
 ## Funcionalidade criada mas nao usada
 
-Voce criou o `uploadImagem()` no `storageService.ts` e exportou certinho, mas nenhum componente usa ele. No formulario de cadastro, o campo de imagem e um input de texto (URL). Na proxima entrega, integre o upload de verdade.
+<!-- Voce criou o `uploadImagem()` no `storageService.ts` e exportou certinho, mas nenhum componente usa ele. No formulario de cadastro, o campo de imagem e um input de texto (URL). Na proxima entrega, integre o upload de verdade. -->
 
 ---
 

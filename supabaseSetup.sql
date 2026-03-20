@@ -13,8 +13,8 @@ create table estabelecimentos (
   subcategoria text not null,
   avaliacao numeric(2,1) not null default 0 check (avaliacao >= 0 and avaliacao <= 5),
   qtd_avaliacao integer default 0,
-  contato jsonb not null default "{}",
-  endereco jsonb not null default "{}",
+  contato jsonb not null default '{}' ::jsonb,
+  endereco jsonb not null default '{}' ::jsonb,
   imagem_url text,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
