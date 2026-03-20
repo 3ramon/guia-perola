@@ -8,7 +8,6 @@ import starIcon from "../../assets/star.png";
 import { useNavigation } from "../../hooks/useNavigation";
 import { PlaceContext } from "../../context/placeContext";
 import { Estabelecimento } from "../../types";
-import { uploadImagem } from "../../services/storageService";
 
 interface PlaceCardInterface {
     estabelecimento: Estabelecimento[];

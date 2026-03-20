@@ -1,5 +1,5 @@
 import NavBar from "../../components/Navbar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Estabelecimento } from "../../types";
 import { useCreateEstabelecimento } from "../../hooks/useCreateEstabelecimento";
 import { useNavigation } from "../../hooks/useNavigation";
@@ -48,7 +48,7 @@ export default function Register() {
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-
+        setSubmitedd(true);
         let imagemUrl = formData.imagem;
         if (file) {
             imagemUrl = await uploadImagem(file);
@@ -60,16 +60,19 @@ export default function Register() {
 
         try {
             await create(payload);
-            setSubmitedd(true);
         } catch (error) {
+            setSubmitedd(false);
             alert("Erro ao cadastrar");
         }
     }
+    console.log(loading, "loading");
+    // useEffect(() => {}, [loading]);
 
     return (
         <>
             <NavBar />
-            {!submitedd ? (
+
+            {!submitedd && (
                 <form onSubmit={handleSubmit}>
                     <h4>Estabelecimento</h4>
                     <input
@@ -149,9 +152,11 @@ export default function Register() {
 
                     <button type="submit">Cadastrar</button>
                 </form>
-            ) : loading ? (
-                <div>Carregando</div>
-            ) : (
+            )}
+            
+            {loading && <div>Carregando</div>}
+
+            {submitedd && !loading && (
                 <p>
                     Cadastro concluido, vá para a tela de Estabelecimentos!
                     <button onClick={() => handleNavigation("Places")}>
