@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import NavBar from "../../components/Navbar";
 import { PlaceContext } from "../../context/placeContext";
 
 export default function PlaceDetails() {
@@ -7,7 +6,6 @@ export default function PlaceDetails() {
 
     return (
         <>
-            <NavBar />
             <h1>Estamos nos detalhes dos estabelecimentos</h1>
             <ul>
                 {selectedEstabelecimento && (

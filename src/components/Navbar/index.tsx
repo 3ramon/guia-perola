@@ -1,59 +1,91 @@
-import "./style.css";
-
 import { useState } from "react";
 import { useNavigation } from "../../hooks/useNavigation";
 import logo from "../../assets/logo.png";
+import { useLocation, Link } from "react-router-dom";
+import { Menu, X, HouseHeart } from "lucide-react";
+import styles from "./Navbar.module.css";
+
 interface NavbarProps {
     isShop: boolean;
 }
+
+const NAV_ITEMS = [
+    { label: "Inicio", path: "/" },
+    { label: "Cadastro", path: "/Register" },
+    { label: "MapCity", path: "#", disabled: true },
+    { label: "Marketplace", path: "#", disabled: true },
+    { label: "Novidades", path: "#", disabled: true },
+    { label: "Eventos", path: "#", disabled: true },
+    { label: "Sobre", path: "/About", disabled: true },
+];
 
 export default function NavBar() {
     const [showCart, setShowCart] = useState(false);
     const { handleNavigation } = useNavigation();
 
+    const [open, setOpen] = useState(false);
+    const location = useLocation();
+
     return (
-        <nav className="navbar">
-            <img
-                className="nav__logo"
-                src={logo}
-                alt="logo"
-                onClick={() => {
-                    handleNavigation("");
-                }}
-            />
+        <header className={styles.header}>
+            <div className={styles.container}>
+                <Link to="/" className={styles.logo}>
+                    <HouseHeart />
+                    <span>Cidade Perola</span>
+                </Link>
 
-            <div className="navbar__center">
+                <nav className={styles.desktopNav}>
+                    {NAV_ITEMS.map((item) => (
+                        <Link
+                            key={item.label}
+                            to={item.path}
+                            className={`${styles.navLink} ${
+                                item.disabled
+                                    ? styles.navLinkDisabled
+                                    : location.pathname === item.path
+                                      ? styles.navLinkActive
+                                      : ""
+                            }`}
+                        >
+                            {item.label}
+                            {item.disabled && (
+                                <span className={styles.soonBadge}>Soon</span>
+                            )}
+                        </Link>
+                    ))}
+                </nav>
+
                 <button
-                    className="cart__btn__secundary"
-                    name="Estabelecimentos"
-                    onClick={() => handleNavigation("Places")}
+                    className={styles.menuButton}
+                    onClick={() => setOpen(!open)}
                 >
-                    Estabelecimentos
-                </button>
-                <button
-                    className="cart__btn__secundary"
-                    name="Mapa"
-                    onClick={() => handleNavigation("MapCity")}
-                >
-                    Mapa
-                </button>
-                <button
-                    className="cart__btn__secundary"
-                    name="Sobre"
-                    onClick={() => handleNavigation("About")}
-                >
-                    Sobre o criador
+                    {open ? <X size={20} /> : <Menu size={20} />}
                 </button>
             </div>
 
-            <div className="navbar__right">
-                <button
-                    className="cart__btn"
-                    onClick={() => handleNavigation("Register")}
-                >
-                    Cadastrar
-                </button>
-            </div>
-        </nav>
+            {open && (
+                <nav className={styles.mobileNav}>
+                    {NAV_ITEMS.map((item) => (
+                        <Link
+                            key={item.label}
+                            to={item.path}
+                            onClick={() => setOpen(false)}
+                            className={`${styles.mobileNavLink} ${
+                                item.disabled
+                                    ? styles.navLinkDisabled
+                                    : location.pathname === item.path
+                                      ? styles.navLinkActive
+                                      : ""
+                            }`}
+                        >
+                            {item.label}
+                            {item.disabled && (
+                                <span className={styles.soonBadge}>Soon</span>
+                            )}
+                        </Link>
+                    ))}
+                </nav>
+            )}
+        </header>
     );
 }

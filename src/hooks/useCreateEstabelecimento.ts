@@ -1,19 +1,48 @@
 import { useState } from "react";
 import { createEstabelecimento } from "../services/estabelecimentoService";
 import { Estabelecimento } from "../types";
+import { uploadImagem } from "../services";
 
-export function useCreateEstabelecimento() {
-    const [loading, setLoading] = useState(false);
+interface UseCreateEstabelecimentoResult {
+    create: (data: Omit<Estabelecimento, "id" | "imagem">,
+        imagemFile?: File
+    ) => Promise<Estabelecimento | null>;
+    isLoading: boolean;
+    error: string | null;
+    success: boolean;
+}
 
-    async function create(estabelecimento: Omit<Estabelecimento, "id">) {
+export function useCreateEstabelecimento(): UseCreateEstabelecimentoResult {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState(false);
+
+    async function create(
+        data: Omit<Estabelecimento, "id" | "imagem">, 
+        imagemFile?: File): Promise<Estabelecimento | null> {
+        setIsLoading(true);
+        setError(null);
+        setSuccess(false);
+
         try {
-            setLoading(true);
-            const result = await createEstabelecimento(estabelecimento);
+            let imagemUrl = ""  
+
+            if(imagemFile){
+                imagemUrl = await uploadImagem(imagemFile);
+            }
+            const result = await createEstabelecimento({ ...data, imagem: imagemUrl });
+
+            setSuccess(true);
             return result;
-        } finally {
-            setLoading(false);
+        } catch (err) {
+            const message =
+                err instanceof Error ? err.message : "Erro ao cadastrar estabelecimento";
+            setError(message);
+            return null;
+        }finally {
+            setIsLoading(false);
         }
     }
 
-    return { create, loading};
+    return { create, isLoading, error, success };
 }

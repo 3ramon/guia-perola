@@ -20,9 +20,7 @@ export function PlaceProvider({ children }: { children: ReactNode }) {
     const [selectedCategoria, setSelectedCategoria] = useState<string | null>(
         null,
     );
-    const { data, loading } = useEstabelecimentos(
-        selectedCategoria ?? undefined,
-    );
+    const { data, loading } = useEstabelecimentos();
     const [selectedEstabelecimento, setSelectedEstabelecimento] =
         useState<Estabelecimento | null>(null);
     const [estabelecimentosBanco, setEstabelecimentosBanco] = useState<
@@ -34,8 +32,6 @@ export function PlaceProvider({ children }: { children: ReactNode }) {
             setEstabelecimentosBanco(data);
         }
     }, [data]);
-
-
     async function savePlace(place: Estabelecimento) {
         await setSelectedEstabelecimento(place);
     }
@@ -48,7 +44,7 @@ export function PlaceProvider({ children }: { children: ReactNode }) {
         <PlaceContext.Provider
             value={{
                 isLoading: loading,
-                estabelecimentosBanco: data,
+                estabelecimentosBanco: estabelecimentosBanco,
                 selectedEstabelecimento,
                 selectedCategoria,
                 filterPlaces,

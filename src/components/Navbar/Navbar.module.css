@@ -1,0 +1,135 @@
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid var(--color-border);
+    background: hsla(0, 0%, 100%, 0.8);
+    backdrop-filter: blur(12px);
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.logo svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.desktopNav {
+  display: none;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .desktopNav {
+    display: flex;
+  }
+}
+
+.navLink {
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: hsla(210, 25%, 12%, 0.7);
+  transition: background 0.2s, color 0.2s;
+  border: none;
+  background: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.navLink:hover {
+  background: var(--color-muted);
+  color: var(--color-fg);
+}
+
+.navLinkActive {
+  background: hsla(173, 58%, 39%, 0.1);
+  color: var(--color-primary);
+}
+
+.navLinkDisabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.soonBadge {
+  margin-left: 0.25rem;
+  border-radius: 0.25rem;
+  background: var(--color-muted);
+  padding: 0.125rem 0.375rem;
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-muted-fg);
+}
+
+.menuButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  background: none;
+  border-radius: 0.5rem;
+  color: var(--color-fg);
+  transition: background 0.2s;
+}
+
+.menuButton:hover {
+  background: var(--color-muted);
+}
+
+@media (min-width: 768px) {
+  .menuButton {
+    display: none;
+  }
+}
+
+.mobileNav {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-card);
+  padding: 0.5rem 1rem 1rem;
+}
+
+@media (min-width: 768px) {
+  .mobileNav {
+    display: none;
+  }
+}
+
+.mobileNavLink {
+  display: block;
+  border-radius: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: hsla(210, 25%, 12%, 0.7);
+  text-decoration: none;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}

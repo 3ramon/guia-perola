@@ -1,169 +1,287 @@
-import NavBar from "../../components/Navbar";
-import React, { useEffect, useState } from "react";
+import React, { useState, FormEvent } from "react";
 import { Estabelecimento } from "../../types";
 import { useCreateEstabelecimento } from "../../hooks/useCreateEstabelecimento";
 import { useNavigation } from "../../hooks/useNavigation";
 import { uploadImagem } from "../../services/storageService";
+import { useCategorias } from "../../hooks/useCategorias";
+
+import { useNavigate } from "react-router-dom";
+import styles from "./Register.module.css";
 
 export default function Register() {
-    //configurar o state de as funcoes handle, peguei um exemplo basico de formulario para preencher
-    const [formData, setFormData] = useState<Omit<Estabelecimento, "id">>({
-        nome: "",
-        categoria: "",
-        subcategoria: "",
-        avaliacao: 0,
-        qtdAvaliacao: undefined,
-        contato: { telefone: "", email: "" },
-        endereco: { rua: "", bairro: "", referencia: "" },
-        imagem: "",
-    });
+    const { categorias } = useCategorias();
+
+    const navigate = useNavigate();
+    const [submitting, setSubmitting] = useState(false);
+    const [toastMsg, setToastMsg] = useState<string | null>(null);
+    const [imagemFile, setImagemFile] = useState<File | undefined>(undefined);
     const [file, setFile] = useState<File | null>(null);
-    const [submitedd, setSubmitedd] = useState<boolean>(false);
-    const { handleNavigation } = useNavigation();
 
-    const { create, loading } = useCreateEstabelecimento();
-
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-    ) => {
-        const { name, value } = e.target;
-
-        // campos aninhados
-        if (name.startsWith("contato.")) {
-            const field = name.split(".")[1];
-            setFormData({
-                ...formData,
-                contato: { ...formData.contato, [field]: value },
-            });
-        } else if (name.startsWith("endereco.")) {
-            const field = name.split(".")[1];
-            setFormData({
-                ...formData,
-                endereco: { ...formData.endereco, [field]: value },
-            });
-        } else {
-            setFormData({ ...formData, [name]: value });
-        }
-    };
-
-    async function handleSubmit(e: React.FormEvent) {
+    const { create, isLoading, error, success } = useCreateEstabelecimento();
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        setSubmitedd(true);
-        let imagemUrl = formData.imagem;
-        if (file) {
-            imagemUrl = await uploadImagem(file);
-        }
-        const payload = {
-            ...formData,
-            imagem: imagemUrl,
-        };
+        setSubmitting(true);
 
+        const form = e.currentTarget;
+        const formData = new FormData(form);
         try {
-            await create(payload);
+            await create(
+                {
+                    nome: formData.get("nome") as string,
+                    categoria: formData.get("categoria") as string,
+                    subcategoria: formData.get("subcategoria") as string,
+                    avaliacao: 5.0,
+                    qtdAvaliacao: 15,
+                    contato: {
+                        telefone: formData.get("contato.telefone") as string,
+                        email: formData.get("contato.email") as string,
+                        website: formData.get("contato.website") as string,
+                        instagram: formData.get("contato.instagram") as string,
+                    },
+                    endereco: {
+                        rua: formData.get("endereco.rua") as string,
+                        bairro: formData.get("endereco.bairro") as string,
+                        referencia: formData.get(
+                            "endereco.referencia",
+                        ) as string,
+                    },
+                },
+                imagemFile,
+            );
+            console.log(
+                {
+                    nome: formData.get("nome") as string,
+                    categoria: formData.get("categoria") as string,
+                    subcategoria: formData.get("subcategoria") as string,
+                    avaliacao: 5.0,
+                    qtdAvaliacao: 15,
+                    contato: {
+                        telefone: formData.get("contato.telefone") as string,
+                        email: formData.get("contato.email") as string,
+                        website: formData.get("contato.website") as string,
+                        instagram: formData.get("contato.instagram") as string,
+                    },
+                    endereco: {
+                        rua: formData.get("endereco.rua") as string,
+                        bairro: formData.get("endereco.bairro") as string,
+                        referencia: formData.get(
+                            "endereco.referencia",
+                        ) as string,
+                    },
+                },
+                imagemFile,
+                "tudo",
+            );
         } catch (error) {
-            setSubmitedd(false);
             alert("Erro ao cadastrar");
         }
+
+        setTimeout(() => {
+            setToastMsg(
+                "Estabelecimento cadastrado! Em breve aparecerá na lista.",
+            );
+            setSubmitting(false);
+            setTimeout(() => navigate("/"), 1200);
+        }, 800);
     }
-    console.log(loading, "loading");
-    // useEffect(() => {}, [loading]);
+
+    const categories = categorias.filter((c) => c !== "All");
 
     return (
-        <>
-            <NavBar />
+        <main className={styles.page}>
+            <h1 className={styles.title}>Cadastre um novo estabelecimento</h1>
+            <p className={styles.subtitle}>
+                Preencha os detalhes abaixo para adicionar uma empresa ou
+                estabelecimento local.
+            </p>
 
-            {!submitedd && (
-                <form onSubmit={handleSubmit}>
-                    <h4>Estabelecimento</h4>
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <div className={styles.field}>
+                    <label htmlFor="nome" className={styles.label}>
+                        Nome *
+                    </label>
                     <input
                         name="nome"
-                        placeholder="Nome"
-                        value={formData.nome}
-                        onChange={handleChange}
+                        id="nome"
+                        className={styles.input}
+                        required
+                        maxLength={50}
+                        placeholder="Supermercado Extra"
                     />
-                    <input
+                </div>
+
+                <div className={styles.field}>
+                    <label htmlFor="categoria" className={styles.label}>
+                        Categoria *
+                    </label>
+                    <select
                         name="categoria"
-                        placeholder="Categoria"
-                        value={formData.categoria}
-                        onChange={handleChange}
-                    />
+                        id="categoria"
+                        className={styles.select}
+                        required
+                        defaultValue=""
+                    >
+                        <option value="" disabled>
+                            Selecione a categoria
+                        </option>
+                        {categories.map((c) => (
+                            <option key={c} value={c}>
+                                {c}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className={styles.field}>
+                    <label htmlFor="subcategoria" className={styles.label}>
+                        Subcategoria *
+                    </label>
                     <input
                         name="subcategoria"
-                        placeholder="Subcategoria"
-                        value={formData.subcategoria}
-                        onChange={handleChange}
+                        id="subcategoria"
+                        className={styles.input}
+                        required
+                        maxLength={30}
+                        placeholder="Supermercado"
                     />
-                    <input
-                        name="avaliacao"
-                        type="number"
-                        placeholder="Avaliação"
-                        value={formData.avaliacao}
-                        onChange={handleChange}
-                    />
-                    <input
-                        name="qtdAvaliacao"
-                        type="number"
-                        placeholder="Qtd Avaliações"
-                        value={formData.qtdAvaliacao || ""}
-                        onChange={handleChange}
-                    />
+                </div>
 
-                    <h4>Contato</h4>
-                    <input
-                        name="contato.telefone"
-                        placeholder="Telefone"
-                        value={formData.contato.telefone}
-                        onChange={handleChange}
-                    />
-                    <input
-                        name="contato.email"
-                        placeholder="Email"
-                        value={formData.contato.email}
-                        onChange={handleChange}
-                    />
+                <p className={styles.subtitle}>Endereço</p>
 
-                    <h4>Endereço</h4>
+                <div className={styles.field}>
+                    <label htmlFor="rua" className={styles.label}>
+                        Rua *
+                    </label>
                     <input
                         name="endereco.rua"
-                        placeholder="Rua"
-                        value={formData.endereco.rua}
-                        onChange={handleChange}
+                        id="rua"
+                        className={styles.input}
+                        required
+                        maxLength={200}
+                        placeholder="Rua perola, 1234"
                     />
+                </div>
+
+                <div className={styles.field}>
+                    <label htmlFor="bairro" className={styles.label}>
+                        Bairro *
+                    </label>
                     <input
                         name="endereco.bairro"
-                        placeholder="Bairro"
-                        value={formData.endereco.bairro}
-                        onChange={handleChange}
+                        id="bairro"
+                        className={styles.input}
+                        required
+                        maxLength={200}
+                        placeholder="Centro"
                     />
+                </div>
+
+                <div className={styles.field}>
+                    <label htmlFor="referencia" className={styles.label}>
+                        Ponto de referência *
+                    </label>
                     <input
                         name="endereco.referencia"
-                        placeholder="Referencia"
-                        value={formData.endereco.referencia}
-                        onChange={handleChange}
+                        id="referencia"
+                        className={styles.input}
+                        required
+                        maxLength={200}
+                        placeholder="Próximo a lotérica"
                     />
-                    <h4>Imagem</h4>
+                </div>
+
+                <p className={styles.subtitle}>Contato</p>
+
+                <div className={styles.row}>
+                    <div className={styles.field}>
+                        <label htmlFor="telefone" className={styles.label}>
+                            Telefone *
+                        </label>
+                        <input
+                            name="contato.telefone"
+                            id="telefone"
+                            className={styles.input}
+                            required
+                            type="tel"
+                            maxLength={20}
+                            placeholder="(00) 00000-0000"
+                        />
+                    </div>
+                    <div className={styles.field}>
+                        <label htmlFor="email" className={styles.label}>
+                            Email *
+                        </label>
+                        <input
+                            name="contato.email"
+                            id="email"
+                            className={styles.input}
+                            type="email"
+                            maxLength={100}
+                            placeholder="contact@example.com"
+                        />
+                    </div>
+                    <div className={styles.field}>
+                        <label htmlFor="website" className={styles.label}>
+                            Website *
+                        </label>
+                        <input
+                            name="contato.website"
+                            id="website"
+                            className={styles.input}
+                            type="text"
+                            maxLength={100}
+                            placeholder="www.sitedomercado.com"
+                        />
+                    </div>
+                    <div className={styles.field}>
+                        <label htmlFor="instagram" className={styles.label}>
+                            Instagram *
+                        </label>
+                        <input
+                            name="contato.instagram"
+                            id="instagram"
+                            className={styles.input}
+                            type="text"
+                            maxLength={100}
+                            placeholder="@mercado"
+                        />
+                    </div>
+                </div>
+
+                <div className={styles.field}>
+                    <label htmlFor="image" className={styles.label}>
+                        Imagem / Logo (opcional)
+                    </label>
                     <input
-                        name="imagem"
+                        id="image"
+                        className={styles.input}
                         type="file"
-                        placeholder="URL da Imagem"
-                        value={formData.imagem}
-                        onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+                        accept="image/*"
+                        onChange={(e) =>
+                            setImagemFile(e.target.files?.[0] ?? undefined)
+                        }
                     />
+                </div>
 
-                    <button type="submit">Cadastrar</button>
-                </form>
-            )}
-            
-            {loading && <div>Carregando</div>}
+                <button
+                    type="submit"
+                    className={styles.submitBtn}
+                    disabled={submitting}
+                >
+                    {submitting
+                        ? "Cadastrando..."
+                        : "Estabelecimento Cadastrado"}
+                </button>
+            </form>
 
-            {submitedd && !loading && (
-                <p>
-                    Cadastro concluido, vá para a tela de Estabelecimentos!
-                    <button onClick={() => handleNavigation("Places")}>
-                        Estabelecimentos
-                    </button>
-                </p>
+            {toastMsg && (
+                <div className="toast-container">
+                    <div className="toast">
+                        <h4>Success!</h4>
+                        <p>{toastMsg}</p>
+                    </div>
+                </div>
             )}
-        </>
+        </main>
     );
 }

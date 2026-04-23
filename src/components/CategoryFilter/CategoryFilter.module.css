@@ -1,0 +1,28 @@
+.wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.chip {
+    border-radius: 9999px;
+    border: 1px solid var(--color-border);
+    padding: 0.375rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background: var(--color-card);
+    color: var(--color-muted-fg);
+    transition: all 0.2s;
+}
+
+.chip:hover {
+    border-color: hsla(173, 58%, 39%, 0.4);
+    color: var(--color-fg);
+}
+
+.chipActive {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-primary-fg);
+    box-shadow: 0 2px 8px hsla(173, 58%, 39%, 0.25);
+}

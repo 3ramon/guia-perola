@@ -1,0 +1,112 @@
+.page {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+@media (min-width: 640px) {
+  .title {
+    font-size: 1.875rem;
+  }
+}
+
+.subtitle {
+  margin-top: 0.25rem;
+  color: var(--color-muted-fg);
+}
+
+.form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-fg);
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-card);
+  font-size: 0.875rem;
+  color: var(--color-fg);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px hsla(173, 58%, 39%, 0.15);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-muted-fg);
+}
+
+.textarea {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2rem;
+}
+
+.row {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 0.875rem;
+  border: none;
+  border-radius: 9999px;
+  background: var(--color-primary);
+  color: var(--color-primary-fg);
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.2s, opacity 0.2s;
+}
+
+.submitBtn:hover {
+  background: hsl(173, 58%, 33%);
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

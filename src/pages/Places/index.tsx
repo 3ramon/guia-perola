@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import "./style.css";
-import NavBar from "../../components/Navbar";
-import PlaceCard from "../../components/PlaceCard";
+import PlaceCard from "../../components/EstablishmentCard";
 import { PlaceContext } from "../../context/placeContext";
 import { useCategorias } from "../../hooks/useCategorias";
 
@@ -17,7 +16,6 @@ export default function Places() {
 
     return (
         <>
-            <NavBar />
             <div className="home__header">
                 <header className="home__header">
                     <h1>Estabelecimentos de pérola</h1>
