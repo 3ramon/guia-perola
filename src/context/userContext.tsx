@@ -1,4 +1,4 @@
-import React, { createContext, useState, ReactNode, useEffect } from "react";
+import React, { createContext, useState, ReactNode } from "react";
 
 // O formato dos dados que queremos salvar
 
@@ -14,7 +14,6 @@ export const UserContext = createContext<UserContextType>(
 export function UserProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<null>(null);
 
-    useEffect(() => {}, []);
 
     return (
         <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>

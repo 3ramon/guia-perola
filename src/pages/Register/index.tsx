@@ -17,7 +17,7 @@ export default function Register() {
     const [imagemFile, setImagemFile] = useState<File | undefined>(undefined);
     const [file, setFile] = useState<File | null>(null);
 
-    const { create, isLoading, error, success } = useCreateEstabelecimento();
+    const { create } = useCreateEstabelecimento();
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setSubmitting(true);

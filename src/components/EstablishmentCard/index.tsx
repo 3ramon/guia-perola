@@ -1,6 +1,3 @@
-import { useContext, useEffect, useState } from "react";
-import { useNavigation } from "../../hooks/useNavigation";
-import { PlaceContext } from "../../context/placeContext";
 import { Estabelecimento } from "../../types";
 import styles from "./EstablishmentCard.module.css";
 import { HouseHeart, Mail, MapPin, Phone } from "lucide-react";

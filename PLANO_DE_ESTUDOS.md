@@ -13,17 +13,17 @@ Tente seguir a ordem, porque as semanas vao construindo em cima do que voce ja f
 
 ## Semana 1 - Pagina Home e Pagina About
 
-Hoje essas duas paginas so mostram um texto placeholder. Transforme elas em paginas de verdade.
+<!-- Hoje essas duas paginas so mostram um texto placeholder. Transforme elas em paginas de verdade. -->
 
 ### Home (`src/pages/Home/index.tsx`)
 
-A Home e a primeira pagina que o usuario ve. Ela precisa:
+<!-- A Home e a primeira pagina que o usuario ve. Ela precisa:
 
 1. Ter um **banner** com titulo, descricao do app e um botao que leva pra pagina de estabelecimentos
 2. Mostrar as **categorias** disponiveis como cards clicaveis (voce ja tem o hook `useCategorias` — use ele)
-3. Ter uma secao **"como funciona"** explicando o app em 3 passos
+3. Ter uma secao **"como funciona"** explicando o app em 3 passos -->
 
-**Dica:** crie cada secao como um componente separado dentro da pasta `src/pages/Home/`. Crie tambem um `style.css` pra estilizar.
+<!-- **Dica:** crie cada secao como um componente separado dentro da pasta `src/pages/Home/`. Crie tambem um `style.css` pra estilizar. -->
 
 ### About (`src/pages/About/index.tsx`)
 

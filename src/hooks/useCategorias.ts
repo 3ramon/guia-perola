@@ -13,7 +13,7 @@ export function useCategorias() {
         }
 
         fetchCategorias();
-    }, []);
+    }, [categorias]);
 
     return { categorias };
 }

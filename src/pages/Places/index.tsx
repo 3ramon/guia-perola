@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+// @ts-ignore
 import "./style.css";
 import PlaceCard from "../../components/EstablishmentCard";
 import { PlaceContext } from "../../context/placeContext";

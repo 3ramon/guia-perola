@@ -16,7 +16,7 @@ const NAV_ITEMS = [
     { label: "Marketplace", path: "#", disabled: true },
     { label: "Novidades", path: "#", disabled: true },
     { label: "Eventos", path: "#", disabled: true },
-    { label: "Sobre", path: "/About", disabled: true },
+    { label: "Sobre", path: "/About" },
 ];
 
 export default function NavBar() {
