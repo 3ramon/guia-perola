@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import { UserProvider } from "./context/userContext";
 import Register from "./pages/Register";
 import Places from "./pages/Places";
 import PlaceDetails from "./pages/PlaceDetails";
@@ -12,7 +11,6 @@ import NotFound from "./pages/NotFound";
 
 function App() {
     return (
-        <UserProvider>
             <PlaceProvider>
                 <BrowserRouter>
                     <NavBar />
@@ -31,7 +29,6 @@ function App() {
                     </Routes>
                 </BrowserRouter>
             </PlaceProvider>
-        </UserProvider>
     );
 }
 

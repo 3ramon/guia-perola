@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../config/supabase";
 import { getCategorias } from "../services";
 
 export function useCategorias() {

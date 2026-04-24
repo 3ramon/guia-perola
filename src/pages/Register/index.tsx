@@ -1,10 +1,6 @@
 import React, { useState, FormEvent } from "react";
-import { Estabelecimento } from "../../types";
 import { useCreateEstabelecimento } from "../../hooks/useCreateEstabelecimento";
-import { useNavigation } from "../../hooks/useNavigation";
-import { uploadImagem } from "../../services/storageService";
 import { useCategorias } from "../../hooks/useCategorias";
-
 import { useNavigate } from "react-router-dom";
 import styles from "./Register.module.css";
 
@@ -15,7 +11,6 @@ export default function Register() {
     const [submitting, setSubmitting] = useState(false);
     const [toastMsg, setToastMsg] = useState<string | null>(null);
     const [imagemFile, setImagemFile] = useState<File | undefined>(undefined);
-    const [file, setFile] = useState<File | null>(null);
 
     const { create } = useCreateEstabelecimento();
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {

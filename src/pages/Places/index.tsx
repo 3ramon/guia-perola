@@ -13,7 +13,7 @@ export default function Places() {
 
     useEffect(() => {
         filterPlaces(categoriaAtiva);
-    }, [categoriaAtiva]);
+    }, [categoriaAtiva, filterPlaces]);
 
     return (
         <>

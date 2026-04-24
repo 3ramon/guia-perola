@@ -1,7 +1,6 @@
-import React, { createContext, useState, ReactNode, useEffect } from "react";
+import{ createContext, useState, ReactNode, useEffect } from "react";
 import { Estabelecimento } from "../types";
 import { useEstabelecimentos } from "../hooks/useEstabelecimentos";
-import { useCategorias } from "../hooks/useCategorias";
 
 interface PlaceContextType {
     selectedEstabelecimento: Estabelecimento | null;

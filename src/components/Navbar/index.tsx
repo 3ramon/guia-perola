@@ -1,13 +1,8 @@
 import { useState } from "react";
 import { useNavigation } from "../../hooks/useNavigation";
-import logo from "../../assets/logo.png";
 import { useLocation, Link } from "react-router-dom";
 import { Menu, X, HouseHeart } from "lucide-react";
 import styles from "./Navbar.module.css";
-
-interface NavbarProps {
-    isShop: boolean;
-}
 
 const NAV_ITEMS = [
     { label: "Inicio", path: "/" },
@@ -20,8 +15,6 @@ const NAV_ITEMS = [
 ];
 
 export default function NavBar() {
-    const [showCart, setShowCart] = useState(false);
-    const { handleNavigation } = useNavigation();
 
     const [open, setOpen] = useState(false);
     const location = useLocation();

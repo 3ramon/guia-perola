@@ -13,7 +13,7 @@ export default function PlaceDetails() {
                         <h1>{selectedEstabelecimento.nome}</h1>
                         <p>{selectedEstabelecimento.categoria}</p>
                         <p>{selectedEstabelecimento.endereco.rua}</p>
-                        <img src={selectedEstabelecimento.imagem} />
+                        <img src={selectedEstabelecimento.imagem}  alt={selectedEstabelecimento.id}/>
                     </>
                 )}
             </ul>

@@ -4,13 +4,12 @@ import { Plus } from "lucide-react";
 import cityBackground from "../../assets/Perola.jpeg";
 import styles from "./Home.module.css";
 import { PlaceContext } from "../../context/placeContext";
-import { useCategorias } from "../../hooks/useCategorias";
 import CategoryFilter from "../../components/CategoryFilter";
 import SearchBar from "../../components/SearchBar";
 import EstablishmentCard from "../../components/EstablishmentCard";
 
 export default function Home() {
-    const { estabelecimentosBanco, filterPlaces, isLoading } =
+    const { estabelecimentosBanco} =
         useContext(PlaceContext);
     const [categoriaAtiva, setCategoriaAtiva] = useState<string | null>(null);
 
